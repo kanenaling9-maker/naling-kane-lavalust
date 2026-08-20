@@ -535,7 +535,8 @@ $student = [
 
                     <aside class="access-card">
                         <div class="access-badge">01</div>
-                        <form id="studentForm" method="get" action="">
+                        <form id="studentForm" method="get" action="/?home=1">
+                            <input type="hidden" name="home" value="1">
                             <div>
                                 <label class="field-label" for="studentName">Student Name</label>
                                 <input id="studentName" name="student" type="text" placeholder="Enter student name" value="Kane Ashley E. Naling" required>
