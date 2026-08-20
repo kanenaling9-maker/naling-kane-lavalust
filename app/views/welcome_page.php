@@ -1,7 +1,21 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
-$showProfile = isset($_GET['student']) && trim($_GET['student']) !== '';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+$submittedStudentName = trim((string) ($_GET['student'] ?? ''));
+$fromHomeForm = isset($_GET['from_home']) && $_GET['from_home'] === '1';
+
+if ($fromHomeForm && $submittedStudentName !== '') {
+    $_SESSION['student_access'] = true;
+    $_SESSION['student_name'] = $submittedStudentName;
+} elseif (isset($_GET['student']) && !$fromHomeForm) {
+    unset($_SESSION['student_access'], $_SESSION['student_name']);
+}
+
+$showProfile = (!empty($_SESSION['student_access']) && $_SESSION['student_access'] === true) || ($fromHomeForm && $submittedStudentName !== '');
 
 $student = [
     'id' => 'MCC2024-00162',
@@ -531,14 +545,12 @@ $student = [
                 <section class="hero-panel" aria-label="Student information page">
                     <div class="intro">
                         <div class="label-tag">Student Information</div>
-                        <h1>Welcome,<br>Student<br>User.</h1>
                     </div>
 
                     <aside class="access-card">
                         <div class="access-badge">01</div>
-                        <h2>Profile access</h2>
-                        <p>Verify the student name to open the full profile.</p>
                         <form id="studentForm" method="get" action="">
+                            <input type="hidden" name="from_home" value="1">
                             <div>
                                 <label class="field-label" for="studentName">Student Name</label>
                                 <input id="studentName" name="student" type="text" placeholder="Enter student name" value="Kane Ashley E. Naling" required>
