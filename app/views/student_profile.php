@@ -4,6 +4,8 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 $escape = static function ($value) {
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 };
+$accessWarning = $_SESSION['student_access_warning'] ?? '';
+unset($_SESSION['student_access_warning']);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -25,6 +27,9 @@ $escape = static function ($value) {
             <nav class="nav" aria-label="Main navigation"><a href="/student">Home</a><a class="active" href="/student/profile">Profile</a></nav>
         </header>
         <main>
+            <?php if ($accessWarning !== ''): ?>
+                <div style="margin-bottom:24px;padding:14px 18px;border:2px solid #8a5a00;background:#fff1c7;color:#5d3b00;font-weight:700;line-height:1.45;">&#9888; <?= $escape($accessWarning) ?></div>
+            <?php endif; ?>
             <div class="eyebrow">Verified student record</div>
             <h1>Student profile</h1>
             <div class="profile-grid">
