@@ -42,7 +42,7 @@ $escape = static function ($value) {
                     <h2>Profile access</h2>
                     <p>Visit the protected student profile to view the complete information.</p>
                     <span class="label">Student name</span>
-                    <form method="get" action="/student/profile">
+                    <form method="post" action="/student/profile">
                         <input type="text" name="name" value="<?= $escape($student['name']) ?>" placeholder="Enter any student name" required>
                         <button class="button" type="submit">Open student profile</button>
                     </form>

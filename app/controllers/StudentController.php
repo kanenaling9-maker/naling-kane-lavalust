@@ -24,7 +24,7 @@ class StudentController extends Controller
 
     public function profile()
     {
-        $displayName = trim((string) ($_GET['name'] ?? ''));
+        $displayName = trim((string) ($_POST['name'] ?? ''));
         $this->call->view('student_profile', ['student' => $this->student($displayName)]);
     }
 }

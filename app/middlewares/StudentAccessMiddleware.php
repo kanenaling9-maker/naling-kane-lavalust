@@ -9,7 +9,7 @@ class StudentAccessMiddleware
             session_start();
         }
 
-        $studentName = trim((string) ($_GET['name'] ?? ''));
+        $studentName = trim((string) ($_POST['name'] ?? ''));
 
         $hasAccess = isset($_SESSION['student_access']) && $_SESSION['student_access'] === true;
 
@@ -18,7 +18,7 @@ class StudentAccessMiddleware
             exit;
         }
 
-        if ($studentName !== '') {
+        if ($studentName !== '' && $_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['student_access'] = true;
         }
 
