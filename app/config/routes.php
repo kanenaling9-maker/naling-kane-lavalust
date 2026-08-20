@@ -34,8 +34,6 @@ defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
  * @license https://opensource.org/licenses/MIT MIT License
  */
 
-require_once APP_DIR . 'config/middleware.php';
-
 /*
 | -------------------------------------------------------------------
 | URI ROUTING
@@ -46,4 +44,6 @@ require_once APP_DIR . 'config/middleware.php';
 */
 /** @var object $router **/
 
-$router->get('/', 'Welcome::index')->middleware('student_access');
+$router->get('/', 'StudentController::index');
+$router->get('/student', 'StudentController::index');
+$router->get('/student/profile', 'StudentController::profile')->middleware('student_access');

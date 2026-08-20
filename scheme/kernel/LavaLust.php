@@ -148,6 +148,14 @@ function _handlers()
 $config = load_class('config', 'kernel');
 
 /**
+ * Load app-level middleware registrations before routes are executed.
+ */
+$middleware_config = APP_DIR . 'config/middleware.php';
+if (file_exists($middleware_config)) {
+	include_once $middleware_config;
+}
+
+/**
  * Instantiate the logger class
  */
 $logger = load_class('logger', 'kernel');
