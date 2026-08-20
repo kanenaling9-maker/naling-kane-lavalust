@@ -1,262 +1,625 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
+
+$showProfile = isset($_GET['student']) && trim($_GET['student']) !== '';
+
+$student = [
+    'id' => 'MCC2024-00162',
+    'name' => 'Kane Ashley E. Naling',
+    'course' => 'Information Technology',
+    'year' => '3rd Year',
+    'section' => '3F4',
+    'email' => 'kanenaling9@gmail.com',
+    'address' => 'Calero, Oriental Mindoro',
+    'contact' => '09690483789',
+    'tag' => 'IT',
+];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to LavaLust</title>
-    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <title>Student Desk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700;800&family=Unbounded:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
         :root {
-            --lava: #dd4814;
-            --lava-dim: #b83a10;
-            --lava-glow: rgba(221,72,20,0.15);
-            --lava-glow-strong: rgba(221,72,20,0.25);
-            --bg: #0a0a0b;
-            --bg2: #111113;
-            --bg3: #18181b;
-            --border: rgba(255,255,255,0.07);
-            --border-hot: rgba(221,72,20,0.35);
-            --text: #f4f4f5;
-            --text-muted: #71717a;
-            --text-dim: #3f3f46;
-            --mono: 'JetBrains Mono', monospace;
-            --sans: 'Unbounded', sans-serif;
+            --bg-page: #f1ece5;
+            --panel: #f5f3ee;
+            --panel-strong: #f0efe8;
+            --ink: #0e0e0f;
+            --muted: #676767;
+            --line: #111111;
+            --accent: #0d4dba;
+            --accent-2: #4ea3ff;
+            --accent-3: #dfe9ff;
+            --shadow: rgba(7, 12, 24, 0.18);
+            --blue-shadow: rgba(13, 77, 186, 0.28);
+            --white-shadow: rgba(255,255,255,0.9);
         }
+
+        * { box-sizing: border-box; }
 
         html { scroll-behavior: smooth; }
 
         body {
-            font-family: var(--sans);
-            background: var(--bg);
-            color: var(--text);
+            margin: 0;
             min-height: 100vh;
+            font-family: "Inter", sans-serif;
+            background: var(--bg-page);
+            color: var(--ink);
             overflow-x: hidden;
         }
 
-        /* ── NOISE TEXTURE ── */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.6;
-        }
-
-        /* ── GRID BACKGROUND ── */
+        body::before,
         body::after {
-            content: '';
-            position: fixed;
-            inset: 0;
-            background-image:
-                linear-gradient(var(--border) 1px, transparent 1px),
-                linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 60px 60px;
-            pointer-events: none;
-            z-index: 0;
-            mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
-        }
-
-        /* ── GLOW ORBS ── */
-        .orb {
+            content: "";
             position: fixed;
             border-radius: 50%;
-            filter: blur(120px);
-            pointer-events: none;
             z-index: 0;
-        }
-        .orb-1 {
-            width: 600px; height: 600px;
-            top: -200px; left: -100px;
-            background: radial-gradient(circle, rgba(221,72,20,0.12) 0%, transparent 70%);
-        }
-        .orb-2 {
-            width: 400px; height: 400px;
-            top: 200px; right: -100px;
-            background: radial-gradient(circle, rgba(221,72,20,0.07) 0%, transparent 70%);
+            pointer-events: none;
         }
 
-        /* ── LAYOUT ── */
-        .wrap {
+        body::before {
+            width: 250px;
+            height: 250px;
+            right: 30px;
+            bottom: 12px;
+            background: rgba(17, 17, 17, 0.03);
+        }
+
+        body::after {
+            width: 180px;
+            height: 180px;
+            left: 50px;
+            top: 60px;
+            background: rgba(13, 77, 186, 0.06);
+        }
+
+        .frame {
             position: relative;
             z-index: 1;
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            width: min(1220px, calc(100vw - 80px));
+            margin: 42px auto;
+            background: var(--panel);
+            border: 3px solid var(--line);
+            border-radius: 18px 18px 24px 18px;
+            box-shadow: 18px 18px 0 var(--accent);
+            overflow: hidden;
         }
 
-        /* ── NAV ── */
-        nav {
-            position: relative;
-            z-index: 10;
+        .topbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--border);
-            backdrop-filter: blur(12px);
-            background: rgba(10,10,11,0.6);
-            max-width: 100%;
+            gap: 24px;
+            min-height: 84px;
+            padding: 16px 34px;
+            border-bottom: 2px solid var(--line);
+            background: rgba(255,255,255,0.15);
         }
 
-        .nav-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 1.1rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            color: var(--text);
-            text-decoration: none;
-        }
-
-        .nav-logo .flame {
-            width: 28px; height: 28px;
-            background: var(--lava);
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            box-shadow: 0 0 20px var(--lava-glow-strong);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 0.25rem;
-        }
-
-        .nav-links a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 500;
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            transition: color 0.2s, background 0.2s;
-        }
-
-        .nav-links a:hover { color: var(--text); background: var(--bg3); }
-
-        .nav-links .btn-nav {
-            color: var(--text);
-            background: var(--lava);
-            padding: 0.4rem 1rem;
-            border-radius: 6px;
-            margin-left: 0.5rem;
-            transition: background 0.2s, box-shadow 0.2s;
-        }
-
-        .nav-links .btn-nav:hover {
-            background: var(--lava-dim);
-            box-shadow: 0 0 20px var(--lava-glow-strong);
-        }
-
-        /* ── HERO ── */
-        .hero {
-            padding: 7rem 2rem 5rem;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .badge {
+        .brand {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            background: rgba(221,72,20,0.1);
-            border: 1px solid var(--border-hot);
-            color: #f97316;
-            font-size: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            padding: 0.35rem 0.9rem;
-            border-radius: 999px;
-            margin-bottom: 2rem;
-            font-family: var(--mono);
-        }
-
-        .badge::before {
-            content: '';
-            width: 6px; height: 6px;
-            background: var(--lava);
-            border-radius: 50%;
-            box-shadow: 0 0 8px var(--lava);
-            animation: pulse 2s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--lava); }
-            50% { opacity: 0.5; box-shadow: 0 0 3px var(--lava); }
-        }
-
-        .hero h1 {
-            font-size: clamp(3rem, 8vw, 6rem);
+            gap: 14px;
             font-weight: 800;
-            line-height: 1;
-            letter-spacing: -0.04em;
-            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            font-size: 1.08rem;
+            color: var(--ink);
         }
 
-        .hero h1 .word-lava { color: var(--lava); }
-        .hero h1 .word-lust {
-            color: transparent;
-            -webkit-text-stroke: 1.5px rgba(255,255,255,0.3);
+        .brand-mark {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 30%, #bfc9e7 0%, #1b3f8b 26%, #0b0b0c 60%, #111 100%);
+            border: 2px solid var(--line);
+            box-shadow: inset 0 0 0 3px rgba(255,255,255,0.12), 0 6px 0 rgba(0,0,0,0.18);
         }
 
-        .hero-sub {
-            font-size: 1.15rem;
-            color: var(--text-muted);
-            max-width: 520px;
-            margin: 0 auto 2.5rem;
-            line-height: 1.7;
-            font-weight: 400;
-        }
-
-        .hero-actions {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .btn {
+        .home-btn {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-family: var(--sans);
-            font-size: 0.9rem;
-            font-weight: 600;
+            justify-content: center;
+            min-width: 118px;
+            padding: 10px 18px;
+            border: 2px solid var(--line);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.38);
+            color: var(--ink);
             text-decoration: none;
-            transition: all 0.2s;
-            cursor: pointer;
-            border: none;
+            font-weight: 600;
+            box-shadow: 0 6px 0 rgba(15,15,15,0.16);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .btn-primary {
-            background: var(--lava);
+        .home-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 0 rgba(15,15,15,0.16);
+        }
+
+        .content {
+            position: relative;
+            min-height: 760px;
+            padding: 42px 64px 64px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.15), rgba(13, 77, 186, 0.03));
+        }
+
+        .hero-panel {
+            display: grid;
+            grid-template-columns: 1.2fr 0.9fr;
+            align-items: center;
+            gap: 64px;
+            padding-top: 48px;
+        }
+
+        .intro {
+            position: relative;
+            padding-left: 8px;
+        }
+
+        .label-tag {
+            display: inline-block;
+            padding: 8px 18px;
+            margin-bottom: 28px;
+            background: var(--accent);
             color: #fff;
-            box-shadow: 0 0 0 0 var(--lava-glow);
+            text-transform: uppercase;
+            letter-spacing: 0.09em;
+            font-size: 0.72rem;
+            font-weight: 800;
+            border-radius: 8px;
+            border: 2px solid var(--line);
+            box-shadow: 0 6px 0 rgba(0,0,0,0.18);
         }
 
-        .btn-primary:hover {
-            background: var(--lava-dim);
-            box-shadow: 0 0 30px var(--lava-glow-strong), 0 4px 15px rgba(0,0,0,0.3);
-            transform: translateY(-1px);
+        h1 {
+            margin: 0;
+            font-family: "Cormorant Garamond", serif;
+            font-size: clamp(4.6rem, 7vw, 10rem);
+            line-height: 0.84;
+            letter-spacing: -0.065em;
+            font-weight: 700;
+            color: #0d0d0f;
         }
+
+        .subtext {
+            max-width: 550px;
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: 1.1rem;
+            line-height: 1.7;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .meta {
+            margin-top: 28px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.09em;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+
+        .meta-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 0 4px rgba(13, 77, 186, 0.12);
+        }
+
+        .access-card {
+            position: relative;
+            width: min(100%, 430px);
+            margin-left: auto;
+            background: linear-gradient(180deg, #f8f7f4, #efeee9);
+            border: 2px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 10px 12px 0 var(--accent);
+            padding: 22px 18px 18px;
+        }
+
+        .access-badge {
+            position: absolute;
+            top: -18px;
+            right: 18px;
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            background: var(--ink);
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 800;
+            display: grid;
+            place-items: center;
+            border: 2px solid var(--line);
+            box-shadow: 0 8px 0 rgba(0,0,0,0.14);
+        }
+
+        .access-card h2 {
+            margin: 22px 0 16px;
+            font-size: clamp(1.8rem, 2vw, 2.6rem);
+            line-height: 1.1;
+            letter-spacing: -0.06em;
+            font-weight: 800;
+            color: var(--ink);
+        }
+
+        .access-card p {
+            margin: 0 0 18px;
+            color: var(--muted);
+            font-size: 1.05rem;
+            line-height: 1.5;
+        }
+
+        form {
+            display: grid;
+            gap: 18px;
+        }
+
+        .field-label {
+            display: block;
+            margin: 0 0 8px;
+            font-size: 0.78rem;
+            font-weight: 800;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--ink);
+        }
+
+        input {
+            width: 100%;
+            min-height: 60px;
+            border: 2px solid rgba(17,17,17,0.8);
+            border-radius: 12px;
+            background: rgba(255,255,255,0.25);
+            font-size: 1.15rem;
+            color: var(--ink);
+            padding: 16px 18px;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px rgba(13, 77, 186, 0.12);
+        }
+
+        .submit-btn {
+            min-height: 60px;
+            border: 2px solid var(--line);
+            border-radius: 12px;
+            background: linear-gradient(180deg, #f4cb54, #e4b52b);
+            color: var(--ink);
+            font-weight: 800;
+            letter-spacing: 0.03em;
+            font-size: 1.05rem;
+            cursor: pointer;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.15);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 0 rgba(0,0,0,0.15);
+        }
+
+        .profile-shell {
+            display: none;
+            padding-top: 26px;
+        }
+
+        .profile-shell.active {
+            display: block;
+        }
+
+        .profile-title {
+            margin: 0 0 34px;
+            font-size: clamp(4rem, 7vw, 9rem);
+            line-height: 0.9;
+            letter-spacing: -0.065em;
+            font-family: "Cormorant Garamond", serif;
+            color: var(--ink);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 360px 1fr;
+            gap: 36px;
+            align-items: start;
+        }
+
+        .profile-card {
+            background: linear-gradient(180deg, #f5f4f2, #f0efe9);
+            border: 2px solid var(--line);
+            border-radius: 20px;
+            box-shadow: 12px 14px 0 rgba(13, 77, 186, 0.2);
+            padding: 24px 20px 20px;
+            text-align: center;
+        }
+
+        .avatar-wrap {
+            width: 190px;
+            height: 190px;
+            margin: 0 auto 14px;
+            border-radius: 50%;
+            border: 3px solid var(--line);
+            background: linear-gradient(135deg, #d9e7ff, #bfd5ff 35%, #8eb7ff 100%);
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 0 5px rgba(255,255,255,0.6), 0 12px 0 rgba(0,0,0,0.12);
+        }
+
+        .avatar-wrap::before {
+            content: "";
+            position: absolute;
+            inset: 12px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 50% 30%, rgba(255,255,255,0.6), rgba(13,77,186,0.18));
+        }
+
+        .avatar-wrap::after {
+            content: "";
+            position: absolute;
+            left: 18%;
+            right: 18%;
+            bottom: 10%;
+            height: 42%;
+            border-radius: 48% 52% 48% 52% / 58% 60% 40% 42%;
+            background: linear-gradient(180deg, #0d0d0f, #2d2d2d);
+            box-shadow: 0 -18px 0 10px #f0f3ff;
+            opacity: 0.75;
+        }
+
+        .student-name {
+            margin: 10px 0 0;
+            font-size: clamp(2rem, 2vw, 2.7rem);
+            line-height: 1.05;
+            font-weight: 800;
+            letter-spacing: -0.05em;
+        }
+
+        .student-badge {
+            display: inline-block;
+            margin-top: 16px;
+            background: var(--ink);
+            color: #fff;
+            border: 2px solid var(--line);
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 0.72rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .info-panel {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .info-box {
+            min-height: 104px;
+            background: rgba(255,255,255,0.28);
+            border: 2px solid rgba(17,17,17,0.8);
+            border-radius: 16px;
+            padding: 16px 18px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.28);
+        }
+
+        .info-label {
+            margin: 0 0 6px;
+            font-size: 0.75rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        .info-value {
+            margin: 0;
+            font-size: clamp(1.1rem, 1.4vw, 1.5rem);
+            font-weight: 700;
+            line-height: 1.4;
+            letter-spacing: -0.04em;
+            color: #121212;
+        }
+
+        .info-box.full {
+            grid-column: 1 / -1;
+            min-height: 76px;
+        }
+
+        .contact-box {
+            grid-column: 1 / -1;
+            text-align: center;
+            min-height: 78px;
+            background: rgba(255,255,255,0.25);
+            border: 2px solid rgba(17,17,17,0.8);
+            border-radius: 14px;
+            padding: 18px 20px;
+        }
+
+        .profile-status {
+            margin-top: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.82rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--ink);
+            font-weight: 700;
+        }
+
+        .profile-status::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            background: #2cb06d;
+            box-shadow: 0 0 0 4px rgba(44, 176, 109, 0.14);
+        }
+
+        @media (max-width: 940px) {
+            .frame { width: min(100vw - 24px, 1200px); margin: 18px auto; }
+
+            .topbar {
+                padding: 16px 18px;
+                min-height: 70px;
+            }
+
+            .brand {
+                font-size: 0.86rem;
+                letter-spacing: 0.03em;
+            }
+
+            .hero-panel {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .content {
+                padding: 26px 24px 42px;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .access-card {
+                width: 100%;
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .topbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .home-btn {
+                width: 100%;
+            }
+
+            .info-panel {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-title {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="frame">
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-mark" aria-hidden="true"></span>
+                <span>Student Desk</span>
+            </div>
+            <a class="home-btn" href="/?home=1">Home</a>
+        </header>
+
+        <main class="content">
+            <?php if (!$showProfile): ?>
+                <section class="hero-panel" aria-label="Student information page">
+                    <div class="intro">
+                        <div class="label-tag">Student Information</div>
+                        <h1>Welcome,<br>Student<br>User.</h1>
+                        <p class="subtext">A bright little corner for the essential details of a BS Information Technology student.</p>
+                        <div class="meta">
+                            <span class="meta-dot" aria-hidden="true"></span>
+                            <span>MCC / 3F4 / 3RD YEAR</span>
+                        </div>
+                    </div>
+
+                    <aside class="access-card">
+                        <div class="access-badge">01</div>
+                        <h2>Profile access</h2>
+                        <p>Verify the student name to open the full profile.</p>
+                        <form id="studentForm" method="get" action="">
+                            <div>
+                                <label class="field-label" for="studentName">Student Name</label>
+                                <input id="studentName" name="student" type="text" placeholder="Enter student name" value="Kane Ashley E. Naling" required>
+                            </div>
+                            <button class="submit-btn" type="submit">Open student profile</button>
+                        </form>
+                    </aside>
+                </section>
+            <?php else: ?>
+                <section class="profile-shell active" aria-label="Student profile overview">
+                    <h1 class="profile-title">Student profile</h1>
+
+                    <div class="profile-grid">
+                        <aside class="profile-card">
+                            <div class="avatar-wrap" aria-label="Student profile image"></div>
+                            <h2 class="student-name"><?php echo htmlspecialchars($student['name']); ?></h2>
+                            <div class="student-badge"><?php echo htmlspecialchars($student['course']); ?></div>
+                            <div class="profile-status">active profile</div>
+                        </aside>
+
+                        <div class="info-panel">
+                            <div class="info-box">
+                                <p class="info-label">Student ID</p>
+                                <p class="info-value"><?php echo htmlspecialchars($student['id']); ?></p>
+                            </div>
+                            <div class="info-box">
+                                <p class="info-label">Name</p>
+                                <p class="info-value"><?php echo htmlspecialchars($student['name']); ?></p>
+                            </div>
+
+                            <div class="info-box">
+                                <p class="info-label">Course</p>
+                                <p class="info-value"><?php echo htmlspecialchars($student['course']); ?></p>
+                            </div>
+                            <div class="info-box">
+                                <p class="info-label">Year level</p>
+                                <p class="info-value"><?php echo htmlspecialchars($student['year']); ?></p>
+                            </div>
+
+                            <div class="info-box">
+                                <p class="info-label">Section</p>
+                                <p class="info-value"><?php echo htmlspecialchars($student['section']); ?></p>
+                            </div>
+                            <div class="info-box">
+                                <p class="info-label">Email</p>
+                                <p class="info-value"><?php echo htmlspecialchars($student['email']); ?></p>
+                            </div>
+
+                            <div class="info-box full">
+                                <p class="info-label">Address</p>
+                                <p class="info-value"><?php echo htmlspecialchars($student['address']); ?></p>
+                            </div>
+
+                            <div class="contact-box">
+                                <p class="info-label">Contact</p>
+                                <p class="info-value"><?php echo htmlspecialchars($student['contact']); ?></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            <?php endif; ?>
+        </main>
+    </div>
+</body>
+</html>
 
         .btn-ghost {
             background: transparent;
