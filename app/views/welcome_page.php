@@ -1,21 +1,9 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
 $submittedStudentName = trim((string) ($_GET['student'] ?? ''));
 $fromHomeForm = isset($_GET['from_home']) && $_GET['from_home'] === '1';
-
-if ($fromHomeForm && $submittedStudentName !== '') {
-    $_SESSION['student_access'] = true;
-    $_SESSION['student_name'] = $submittedStudentName;
-} elseif (isset($_GET['student']) && !$fromHomeForm) {
-    unset($_SESSION['student_access'], $_SESSION['student_name']);
-}
-
-$showProfile = (!empty($_SESSION['student_access']) && $_SESSION['student_access'] === true) || ($fromHomeForm && $submittedStudentName !== '');
+$showProfile = $fromHomeForm && $submittedStudentName !== '';
 
 $student = [
     'id' => 'MCC2024-00162',
