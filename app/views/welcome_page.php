@@ -26,18 +26,18 @@ $student = [
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700;800&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-page: #f1ece5;
-            --panel: #f5f3ee;
-            --panel-strong: #f0efe8;
-            --ink: #0e0e0f;
-            --muted: #676767;
-            --line: #111111;
-            --accent: #0d4dba;
-            --accent-2: #4ea3ff;
-            --accent-3: #dfe9ff;
-            --shadow: rgba(7, 12, 24, 0.18);
-            --blue-shadow: rgba(13, 77, 186, 0.28);
-            --white-shadow: rgba(255,255,255,0.9);
+            --bg-page: #f3f6fb;
+            --panel: #ffffff;
+            --panel-soft: #eef4ff;
+            --ink: #111827;
+            --muted: #5d6472;
+            --line: #d8e1f0;
+            --accent: #1d4ed8;
+            --accent-dark: #153ea8;
+            --accent-soft: #dfeaff;
+            --button: #1d4ed8;
+            --button-text: #ffffff;
+            --surface: #f8fafc;
         }
 
         * { box-sizing: border-box; }
@@ -84,9 +84,8 @@ $student = [
             width: min(1220px, calc(100vw - 80px));
             margin: 42px auto;
             background: var(--panel);
-            border: 3px solid var(--line);
-            border-radius: 18px 18px 24px 18px;
-            box-shadow: 18px 18px 0 var(--accent);
+            border: 1px solid var(--line);
+            border-radius: 18px;
             overflow: hidden;
         }
 
@@ -95,51 +94,49 @@ $student = [
             align-items: center;
             justify-content: space-between;
             gap: 24px;
-            min-height: 84px;
-            padding: 16px 34px;
-            border-bottom: 2px solid var(--line);
-            background: rgba(255,255,255,0.15);
+            min-height: 82px;
+            padding: 16px 32px;
+            border-bottom: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.92);
         }
 
         .brand {
             display: inline-flex;
             align-items: center;
-            gap: 14px;
-            font-weight: 800;
-            letter-spacing: 0.05em;
+            gap: 12px;
+            font-weight: 700;
+            letter-spacing: 0.04em;
             text-transform: uppercase;
-            font-size: 1.08rem;
+            font-size: 1rem;
             color: var(--ink);
         }
 
         .brand-mark {
-            width: 32px;
-            height: 32px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background: radial-gradient(circle at 35% 30%, #bfc9e7 0%, #1b3f8b 26%, #0b0b0c 60%, #111 100%);
-            border: 2px solid var(--line);
-            box-shadow: inset 0 0 0 3px rgba(255,255,255,0.12), 0 6px 0 rgba(0,0,0,0.18);
+            background: linear-gradient(135deg, #1d4ed8, #0f172a);
+            border: 1px solid rgba(17,24,39,0.18);
         }
 
         .home-btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            min-width: 118px;
+            min-width: 110px;
             padding: 10px 18px;
-            border: 2px solid var(--line);
-            border-radius: 12px;
-            background: rgba(255,255,255,0.38);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--panel-soft);
             color: var(--ink);
             text-decoration: none;
             font-weight: 600;
-            box-shadow: 0 6px 0 rgba(15,15,15,0.16);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: background 0.2s ease, border-color 0.2s ease;
         }
 
         .home-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 0 rgba(15,15,15,0.16);
+            background: #eaf1ff;
+            border-color: #bed3ff;
         }
 
         .content {
@@ -166,15 +163,14 @@ $student = [
             display: inline-block;
             padding: 8px 18px;
             margin-bottom: 28px;
-            background: var(--accent);
-            color: #fff;
+            background: var(--accent-soft);
+            color: var(--accent-dark);
             text-transform: uppercase;
             letter-spacing: 0.09em;
             font-size: 0.72rem;
             font-weight: 800;
             border-radius: 8px;
-            border: 2px solid var(--line);
-            box-shadow: 0 6px 0 rgba(0,0,0,0.18);
+            border: 1px solid #bfd4ff;
         }
 
         h1 {
@@ -221,28 +217,26 @@ $student = [
             position: relative;
             width: min(100%, 430px);
             margin-left: auto;
-            background: linear-gradient(180deg, #f8f7f4, #efeee9);
-            border: 2px solid var(--line);
-            border-radius: 20px;
-            box-shadow: 10px 12px 0 var(--accent);
+            background: #f9fbff;
+            border: 1px solid var(--line);
+            border-radius: 16px;
             padding: 22px 18px 18px;
         }
 
         .access-badge {
             position: absolute;
-            top: -18px;
+            top: -16px;
             right: 18px;
-            width: 52px;
-            height: 52px;
-            border-radius: 12px;
-            background: var(--ink);
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: var(--accent);
             color: #fff;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             font-weight: 800;
             display: grid;
             place-items: center;
-            border: 2px solid var(--line);
-            box-shadow: 0 8px 0 rgba(0,0,0,0.14);
+            border: 1px solid var(--line);
         }
 
         .access-card h2 {
@@ -295,22 +289,20 @@ $student = [
         }
 
         .submit-btn {
-            min-height: 60px;
-            border: 2px solid var(--line);
-            border-radius: 12px;
-            background: linear-gradient(180deg, #f4cb54, #e4b52b);
-            color: var(--ink);
-            font-weight: 800;
-            letter-spacing: 0.03em;
-            font-size: 1.05rem;
+            min-height: 58px;
+            border: 1px solid var(--accent);
+            border-radius: 10px;
+            background: var(--button);
+            color: var(--button-text);
+            font-weight: 700;
+            letter-spacing: 0.02em;
+            font-size: 1rem;
             cursor: pointer;
-            box-shadow: 0 8px 0 rgba(0,0,0,0.15);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: background 0.2s ease;
         }
 
         .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 0 rgba(0,0,0,0.15);
+            background: var(--accent-dark);
         }
 
         .profile-shell {
@@ -339,11 +331,10 @@ $student = [
         }
 
         .profile-card {
-            background: linear-gradient(180deg, #f5f4f2, #f0efe9);
-            border: 2px solid var(--line);
-            border-radius: 20px;
-            box-shadow: 12px 14px 0 rgba(13, 77, 186, 0.2);
-            padding: 24px 20px 20px;
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            padding: 22px 18px 18px;
             text-align: center;
         }
 
@@ -352,11 +343,10 @@ $student = [
             height: 190px;
             margin: 0 auto 14px;
             border-radius: 50%;
-            border: 3px solid var(--line);
-            background: linear-gradient(135deg, #d9e7ff, #bfd5ff 35%, #8eb7ff 100%);
+            border: 2px solid var(--line);
+            background: linear-gradient(135deg, #dfeaff, #cfe0ff 35%, #bcd1ff 100%);
             overflow: hidden;
             position: relative;
-            box-shadow: inset 0 0 0 5px rgba(255,255,255,0.6), 0 12px 0 rgba(0,0,0,0.12);
         }
 
         .avatar-wrap::before {
@@ -391,9 +381,9 @@ $student = [
         .student-badge {
             display: inline-block;
             margin-top: 16px;
-            background: var(--ink);
+            background: var(--accent);
             color: #fff;
-            border: 2px solid var(--line);
+            border: 1px solid var(--accent-dark);
             border-radius: 8px;
             padding: 10px 18px;
             font-size: 0.72rem;
@@ -410,14 +400,13 @@ $student = [
 
         .info-box {
             min-height: 104px;
-            background: rgba(255,255,255,0.28);
-            border: 2px solid rgba(17,17,17,0.8);
-            border-radius: 16px;
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 12px;
             padding: 16px 18px;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: inset 0 0 0 1px rgba(255,255,255,0.28);
         }
 
         .info-label {
@@ -447,9 +436,9 @@ $student = [
             grid-column: 1 / -1;
             text-align: center;
             min-height: 78px;
-            background: rgba(255,255,255,0.25);
-            border: 2px solid rgba(17,17,17,0.8);
-            border-radius: 14px;
+            background: #f8fafc;
+            border: 1px solid var(--line);
+            border-radius: 12px;
             padding: 18px 20px;
         }
 
@@ -543,11 +532,6 @@ $student = [
                     <div class="intro">
                         <div class="label-tag">Student Information</div>
                         <h1>Welcome,<br>Student<br>User.</h1>
-                        <p class="subtext">A bright little corner for the essential details of a BS Information Technology student.</p>
-                        <div class="meta">
-                            <span class="meta-dot" aria-hidden="true"></span>
-                            <span>MCC / 3F4 / 3RD YEAR</span>
-                        </div>
                     </div>
 
                     <aside class="access-card">
