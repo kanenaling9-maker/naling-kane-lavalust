@@ -10,14 +10,14 @@ $escape = static function ($value) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ashley's Student Desk</title>
+    <title>Kane Student Desk</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700;800&family=Playfair+Display:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root{--ink:#171717;--paper:#fffefa;--cream:#fff9e9;--yellow:#f9c62b;--muted:#746f62;--line:#1d1d1d}
+        :root{--ink:#17152b;--paper:#ffffff;--cream:#f3f0ff;--yellow:#6d5ce7;--muted:#68627b;--line:#27213f;--blue:#3867f0}
         *{box-sizing:border-box} body{margin:0;min-height:100vh;background:var(--cream);color:var(--ink);font-family:"DM Sans",sans-serif;padding:34px 20px;overflow-x:hidden}
-        body:before,body:after{content:"";position:fixed;border:1px solid #f2c43b;border-radius:50%;pointer-events:none;z-index:-1} body:before{width:180px;height:180px;left:-76px;top:-86px} body:after{width:150px;height:150px;right:-52px;bottom:-72px;background:#fff1b5}
+        body:before,body:after{content:"";position:fixed;border:1px solid #8e82ed;border-radius:50%;pointer-events:none;z-index:-1} body:before{width:180px;height:180px;left:-76px;top:-86px} body:after{width:150px;height:150px;right:-52px;bottom:-72px;background:#dce5ff}
         .frame{width:min(980px,100%);margin:auto;background:var(--paper);border:2px solid var(--line);box-shadow:12px 12px 0 var(--yellow);border-radius:7px;overflow:hidden}.topbar{min-height:80px;padding:18px 26px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--line)}
         .brand{display:flex;align-items:center;gap:12px;font-weight:800;letter-spacing:.04em;text-transform:uppercase}.mark{width:38px;height:38px;border:2px solid var(--line);border-radius:50%;display:grid;place-items:center;background:var(--yellow);font-family:"Playfair Display",serif;font-size:1.1rem}.nav{display:flex;gap:10px}.nav a,.button{display:inline-block;padding:10px 15px;border:1px solid var(--line);border-radius:5px;text-decoration:none;color:var(--ink);font-weight:800;background:var(--paper)}.nav a.active,.button{background:var(--yellow)}
         main{padding:74px 62px 82px}.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:62px;align-items:center}.eyebrow{display:inline-block;padding:8px 11px;background:var(--yellow);font-size:.75rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;border-radius:3px}h1{font-family:"Playfair Display",serif;font-size:clamp(3.8rem,7vw,6.6rem);line-height:.88;letter-spacing:-.055em;margin:26px 0 24px;max-width:540px}h1 span{display:block}.intro{font-family:"Playfair Display",serif;font-size:1.1rem;line-height:1.65;color:var(--muted);max-width:480px}.meta{display:flex;align-items:center;gap:10px;margin-top:28px;font-size:.78rem;font-weight:800;letter-spacing:.1em}.dot{width:9px;height:9px;border-radius:50%;background:var(--yellow)}.card{position:relative;border:2px solid var(--line);border-radius:8px;background:var(--cream);padding:30px;box-shadow:10px 10px 0 var(--yellow)}.card:before{content:"01";position:absolute;right:16px;top:-13px;padding:3px 8px;background:var(--ink);color:var(--yellow);font-size:.75rem;font-weight:800}.card h2{font-family:"Playfair Display",serif;font-size:2rem;margin:0 0 14px}.card p{color:var(--muted);line-height:1.5;margin:0 0 24px}.label{display:block;font-size:.72rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:7px}input{width:100%;padding:14px;border:1px solid var(--line);border-radius:5px;background:#fff;font:inherit;margin-bottom:12px}.button{width:100%;font-size:.95rem;cursor:pointer}.note{font-size:.75rem;color:var(--muted);margin-top:18px!important}
@@ -27,7 +27,7 @@ $escape = static function ($value) {
 <body>
     <div class="frame">
         <header class="topbar">
-            <div class="brand"><span class="mark">N</span><span>Ashley's Student Desk</span></div>
+            <div class="brand"><span class="mark">K</span><span>Kane Student Desk</span></div>
             <nav class="nav" aria-label="Main navigation"><a class="active" href="/student">Home</a><a href="/student/profile">Profile</a></nav>
         </header>
         <main>
@@ -42,8 +42,10 @@ $escape = static function ($value) {
                     <h2>Profile access</h2>
                     <p>Visit the protected student profile to view the complete information.</p>
                     <span class="label">Student name</span>
-                    <input type="text" value="<?= $escape($student['name']) ?>" readonly>
-                    <a class="button" href="/student/profile">Open student profile</a>
+                    <form method="get" action="/student/profile">
+                        <input type="text" name="name" value="<?= $escape($student['name']) ?>" placeholder="Enter any student name" required>
+                        <button class="button" type="submit">Open student profile</button>
+                    </form>
                     <p class="note">Access is enabled when you enter through this home page.</p>
                 </aside>
             </section>
