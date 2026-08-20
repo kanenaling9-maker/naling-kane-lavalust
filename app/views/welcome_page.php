@@ -1,9 +1,10 @@
 <?php
 defined('PREVENT_DIRECT_ACCESS') OR exit('No direct script access allowed');
 
+$homeRequested = isset($_GET['home']) && $_GET['home'] === '1';
 $submittedStudentName = trim((string) ($_GET['student'] ?? ''));
-$fromHomeForm = isset($_GET['from_home']) && $_GET['from_home'] === '1';
-$showProfile = $fromHomeForm && $submittedStudentName !== '';
+$blockedProfileAttempt = $submittedStudentName !== '' && !$homeRequested;
+$showProfile = $homeRequested && $submittedStudentName !== '';
 
 $student = [
     'id' => 'MCC2024-00162',
@@ -213,6 +214,43 @@ $student = [
             border-radius: 50%;
             background: var(--accent);
             box-shadow: 0 0 0 4px rgba(13, 77, 186, 0.12);
+        }
+
+        .warning-box {
+            max-width: 720px;
+            margin: 50px auto 0;
+            background: #fff7ed;
+            border: 1px solid #f7c98d;
+            border-radius: 18px;
+            padding: 24px 28px;
+            box-shadow: 0 10px 30px rgba(17, 24, 39, 0.06);
+        }
+
+        .warning-box h1 {
+            margin: 0 0 12px;
+            font-size: clamp(2.3rem, 4vw, 4rem);
+            line-height: 1;
+            letter-spacing: -0.06em;
+        }
+
+        .warning-box p {
+            margin: 0 0 20px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--muted);
+        }
+
+        .warning-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 52px;
+            padding: 0 22px;
+            border-radius: 10px;
+            background: var(--button);
+            color: var(--button-text);
+            text-decoration: none;
+            font-weight: 700;
         }
 
         .access-card {
@@ -529,7 +567,13 @@ $student = [
         </header>
 
         <main class="content">
-            <?php if (!$showProfile): ?>
+            <?php if ($blockedProfileAttempt): ?>
+                <section class="warning-box" aria-live="polite">
+                    <h1>Access denied.</h1>
+                    <p>Please return to the homepage and enter your student name first before opening the profile.</p>
+                    <a class="warning-btn" href="/?home=1">Go to homepage</a>
+                </section>
+            <?php elseif (!$showProfile): ?>
                 <section class="hero-panel" aria-label="Student information page">
                     <div class="intro">
                         <div class="label-tag">Student Information</div>
@@ -537,8 +581,7 @@ $student = [
 
                     <aside class="access-card">
                         <div class="access-badge">01</div>
-                        <form id="studentForm" method="get" action="">
-                            <input type="hidden" name="from_home" value="1">
+                        <form id="studentForm" method="get" action="/?home=1">
                             <div>
                                 <label class="field-label" for="studentName">Student Name</label>
                                 <input id="studentName" name="student" type="text" placeholder="Enter student name" value="Kane Ashley E. Naling" required>
