@@ -19,11 +19,6 @@ class StudentController extends Controller
 
     public function index()
     {
-        if (session_status() !== PHP_SESSION_ACTIVE) {
-            session_start();
-        }
-
-        $_SESSION['student_access'] = true;
         $this->call->view('student_home', ['student' => $this->student()]);
     }
 
